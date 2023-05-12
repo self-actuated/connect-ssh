@@ -1,2 +1,3 @@
-# connect-ssh-action
+# ssh-action
+
 Connect to the actuated SSH gateway

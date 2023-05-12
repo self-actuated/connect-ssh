@@ -1,0 +1,22 @@
+# Copyright (c) 2023 OpenFaaS Ltd
+name: 'Connect this runner to the SSH gateway'
+description: 'All-in-one action to connect to the SSH gateway for actuated'
+branding:
+  icon: 'arrow-right-circle'
+  color: 'gray-dark'
+inputs:
+  gateway:
+    description: 'The gateway hostname address or IP address.'
+    required: false
+    default: ""
+runs:
+    using: 'composite'
+    steps:
+      - id: setup_ssh_for_actor
+        uses: self-actuated/setup-sshd-for-actor@master
+      - id: connect_to_ssh_gateway
+        uses: self-actuated/connect-ssh-gateway@master
+        env:
+          GATEWAY: ${{ inputs.gateway }}
+      - id: block_with_tmux
+        uses: self-actuated/block-with-tmux@master

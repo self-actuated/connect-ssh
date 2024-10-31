@@ -9,6 +9,11 @@ inputs:
     description: 'The gateway hostname address or IP address.'
     required: false
     default: ""
+  block:
+    description: 'Whether to block until the tmux connection is released'
+    required: false
+    default: "true" # Can be "block" or set to any other value to skip blocking
+
 runs:
     using: 'composite'
     steps:
@@ -18,5 +23,6 @@ runs:
         uses: self-actuated/connect-ssh-gateway@master
         env:
           GATEWAY: ${{ inputs.gateway }}
-      - id: block_with_tmux
+      - id: block
+        if: ${{ inputs.block == 'true' }}
         uses: self-actuated/block-with-tmux@master
